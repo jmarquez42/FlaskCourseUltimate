@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block title  %}Home{% endblock  %}
+{% block content  %}
+    {{ super() }}
+    {% include 'this_message.html'%}
+    <h4>Hola {{ name }}, bienvenido a Flask. Tu eres el mejor y te encanta lo que hace y trabajas.</h4>
+    <img src="{{ url_for('static',filename='prettyprinted.png') }}">
+{% endblock  %}
