@@ -7,7 +7,7 @@ app.config['SECRET_KEY'] = 'holamundo'
 
 
 def connect_db():
-    sql = sqlite3.connect('C:\Users\jmarquez\PycharmProjects\FlaskCourseUltimate\db\data.db')
+    sql = sqlite3.connect(b'C:\Users\jmarquez\PycharmProjects\FlaskCourseUltimate\db\data.db')
     sql.row_factory = sqlite3.Row
     return sql
 
@@ -60,6 +60,22 @@ def processjson():
     name = data['name']
     loca = data['location']
     return jsonify({'name': name, 'location': loca})
+
+
+@app.route('/Theforms', methods=['GET', 'POST'])
+def theforms():
+    if request.method == 'GET':
+        print('Nom')
+        return render_template('forms.html')
+    else:
+        name = request.form['name']
+        location = request.form['location']
+        print(name)
+        db = get_db()
+        db.execute('INSERT INTO USERS (name, location) VALUES (?,?)', [name, location])
+        db.commit()
+        print(location)
+        return redirect(url_for('process'), name=name, location=location)
 
 
 if __name__ == '__main__':
